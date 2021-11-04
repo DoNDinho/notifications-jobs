@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 global.logger = require('./business/utils/configs/log4js.config');
 const healthRoute = require('./client/routes/health');
 const port = process.env.PORT;
+const cron = require('node-cron');
+const getCompaniesToPayService = require('./business/services/getCompaniesToPay.service');
 
 const app = express();
 
@@ -19,4 +21,9 @@ app.use(healthRoute);
 
 app.listen(port, () => {
 	logger.info('Servidor en puerto', port);
+
+	// TODO descomentar cuando se implemente servicio de envio de correo
+	// cron.schedule('*/5 * * * * *', async () => {
+	// 	await getCompaniesToPayService.execute();
+	// });
 });
